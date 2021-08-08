@@ -10,7 +10,7 @@ const Navs = () => {
         {/* <li><Link to="/starred">Go to starred page</Link></li> */
             LINKS.map( (item) => {
              return (
-             <li key={item.to}>
+             <li key={item.to}> 
                 <Link to={item.to}>{item.text}</Link>
               </li>
             )})
