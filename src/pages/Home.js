@@ -1,10 +1,13 @@
 import React, {useState }from 'react';
 import MainPageLayout from '../components/MainPageLayout';
+import {apiGet} from '../misc/config';
 
 const Home = () => {
 
-  //defining state
+  //defining state for Input
   const [input , setInput ] = useState('');
+  //defining state for Results
+  const [result , setResult] = useState(null);
 
 
 //defining update method for setInput
@@ -23,18 +26,47 @@ const Home = () => {
   }
 
 //onclick event and API fetch
-  const onSearch = (event) => {
+  const onSearch = () => {
   
-    fetch(`https://api.tvmaze.com/search/shows?q=${input}`)
-    .then(response => response.json())
-    .then(result => console.log(result));
+    apiGet(`/search/shows?q=${input}`).then(result => {
+         setResult(result);
+    });
+    // fetch(`https://api.tvmaze.com/search/shows?q=${input}`)
+    // .then(response => response.json())
+    // .then(result => (
+    //   setResult(result)
+    //   // console.log(result)
+    // ));
   }
+
+  //SeeResults Fuction - we will able to see results
+  const seeResults = () => {
+
+    //doing conditional rendering here
+    if(result && result.length === 0 )
+    {
+      return  <div>Not Results</div> ;
+    
+    }
+    if(result && result.length > 0)
+    {
+      return <div>
+        { result.map ( (item) => (
+          <div key={item.show.id}>{item.show.name}</div>
+        ))}
+      </div>;
+    }
+
+    return null;
+  }
+
 
   return (
     <div>
       <MainPageLayout>
         <input type="text" onChange = {onInputchange} onKeyDown = {onClickEnter} value = {input} placeholder="Search for Movie or Actor"/>
         <button type="button" onClick = {onSearch} >Search</button>
+        {seeResults()}
       </MainPageLayout>
     </div>
   )
