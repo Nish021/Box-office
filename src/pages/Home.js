@@ -1,5 +1,7 @@
 import React, {useState }from 'react';
+import ActorGrid from '../components/actors/ActorGrid';
 import MainPageLayout from '../components/MainPageLayout';
+import ShowGrid from '../components/shows/ShowGrid';
 import {apiGet} from '../misc/config';
 
 const Home = () => {
@@ -52,6 +54,8 @@ const Home = () => {
   const seeResults = () => {
 
     //doing conditional rendering here
+
+    //if we have results but API didnot return any results
     if(result && result.length === 0 )
     {
       
@@ -61,12 +65,13 @@ const Home = () => {
     if(result && result.length > 0)
     {
       return result[0].show ? 
-      result.map ( (item) => (
-        <div key={item.show.id}>{item.show.name}</div>
-      )) :
-      result.map ( (item) => (
-        <div key={item.person.id}>{item.person.name}</div>
-      ))
+      <ShowGrid data={result} /> : <ActorGrid data={result}/>
+      // result.map ( (item) => (
+      //   <div key={item.show.id}>{item.show.name}</div>
+      // )) :
+      // result.map ( (item) => (
+      //   <div key={item.person.id}>{item.person.name}</div>
+      // ))
     }
 
     return null;
