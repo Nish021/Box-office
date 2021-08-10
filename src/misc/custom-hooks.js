@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect } from "react";
+import React, { useReducer, useEffect, useState } from "react";
 
 //defining showsReducer
 function showsReducer(prevState, action) {
@@ -41,4 +41,22 @@ function usePersistedReducer(reducer, initialState, key) {
 //defining another custom hook - useShows
 export function useShows(key = "shows") {
   return usePersistedReducer(showsReducer, [], key);
+}
+
+//Last query Custom Hook
+export function useLastQuery(key = "lastQuery") {
+  const [input, setInput] = useState(() => {
+    const persisted = sessionStorage.getItem(key);
+
+    return persisted ? JSON.parse(persisted) : " ";
+  });
+
+  //here setInput will not write to session storage thats why we need to enchance it
+  // using setPersistedInput , it will resemble setInput
+  const setPersistedInput = (newState) => {
+    setInput(newState);
+    sessionStorage.setItem(key, JSON.stringify(newState));
+  };
+
+  return [input, setPersistedInput];
 }
