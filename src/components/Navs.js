@@ -1,21 +1,33 @@
-import React from 'react';
-import {Link} from 'react-router-dom';
+import React from "react";
+// import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import { NavList, LinkStyled } from "./Navs.styled";
 
 //to make navbar Home and starred
-const LINKS = [ {to:'/' , text: 'Home'} , {to:'/starred', text:'Starred'}];
+const LINKS = [
+  { to: "/", text: "Home" },
+  { to: "/starred", text: "Starred" },
+];
 const Navs = () => {
+  const location = useLocation();
+  console.log(location);
   return (
     <div>
-      <ul>
-        {/* <li><Link to="/starred">Go to starred page</Link></li> */
-            LINKS.map( (item) => {
-             return (
-             <li key={item.to}> 
-                <Link to={item.to}>{item.text}</Link>
-              </li>
-            )})
+      <NavList>
+        {
+          /* <li><Link to="/starred">Go to starred page</Link></li> */
+          LINKS.map((item) => (
+            <li key={item.to}>
+              <LinkStyled
+                to={item.to}
+                className={item.to === location.pathname ? "active" : ""}
+              >
+                {item.text}
+              </LinkStyled>
+            </li>
+          ))
         }
-      </ul>
+      </NavList>
     </div>
   );
 };
