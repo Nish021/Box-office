@@ -17,6 +17,7 @@ export const StylesShowCard = styled(SearchCard)`
 
     button {
       outline: none;
+      background-color: white;
       border: 1px solid #8e8e8e;
       border-radius: 15px;
       padding: 5px 20px;

@@ -8,10 +8,11 @@ function showsReducer(prevState, action) {
     }
 
     case "REMOVE": {
-      return prevState.filter((showId) => {
-        showId !== action.showId;
-      });
+      return prevState.filter((showId) => showId !== action.showId);
     }
+
+    default:
+      return prevState;
   }
 }
 
@@ -32,7 +33,7 @@ function usePersistedReducer(reducer, initialState, key) {
   //need to schronize our state whenever we updated localstorage ? useEffect
   useEffect(() => {
     localStorage.setItem(key, JSON.stringify(state));
-  }, [state]); //using state because we want to run it whenever state changes
+  }, [state, key]); //using state because we want to run it whenever state changes
 
   return [state, dispatch];
 }
