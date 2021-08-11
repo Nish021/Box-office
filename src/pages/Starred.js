@@ -4,6 +4,10 @@ import { apiGet } from "../misc/config";
 import ShowGrid from "../components/shows/ShowGrid";
 import { useShows } from "../misc/custom-hooks";
 
+const Noloading = {
+  margin: "auto",
+  textAlign: "center",
+};
 const Starred = () => {
   //Here not using dispatch
   const [starred] = useShows();
@@ -36,7 +40,9 @@ const Starred = () => {
       <MainPageLayout>
         {isLoading && <div>Shows are still loading</div>}
         {error && <div>Error occured: {error}</div>}
-        {!isLoading && !shows && <div>No shows were added</div>}
+        {!isLoading && !shows && (
+          <div style={Noloading}>No shows were added</div>
+        )}
         {!isLoading && !error && shows && <ShowGrid data={shows} />}
       </MainPageLayout>
     </div>
